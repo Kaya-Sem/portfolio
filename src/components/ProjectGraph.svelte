@@ -7,6 +7,9 @@
   import PdfPopup from './PdfPopup.svelte';
   import { graphConfig as config } from '../config/graphConfig.js';
 
+  const MIN_WIDTH = 600;
+  const MIN_HEIGHT = 300;
+
   let container;
   let svg;
   let activePdf = null;
@@ -32,8 +35,8 @@
   const projectManager = ProjectManager.getInstance();
 
   function initializeGraph() {
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    const width = Math.max(container.clientWidth, MIN_WIDTH);
+    const height = Math.max(container.clientHeight, MIN_HEIGHT);
 
     nodes = projectManager.getNodes();
     links = projectManager.getLinks();
@@ -41,10 +44,12 @@
 
     d3.select(svg).selectAll("*").remove();
 
-    // Create SVG
+    // Create SVG with proper scaling
     const svgElement = d3.select(svg)
-      .attr("width", width)
-      .attr("height", height);
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("preserveAspectRatio", "xMidYMid meet");
 
     svgElement.append("rect")
       .attr("width", width)
@@ -54,9 +59,10 @@
     // Create a group for all elements
     const g = svgElement.append("g");
 
-    // Create zoom behavior
+    // Create zoom behavior with adjusted bounds
     zoom = d3.zoom()
       .scaleExtent([config.zoom.min, config.zoom.max])
+      .extent([[0, 0], [width, height]])
       .on("zoom", (event) => {
         g.attr("transform", event.transform);
       });
@@ -182,7 +188,6 @@
     nodeElements.style("transition", "opacity 0.3s ease");
     labelElements.style("transition", "opacity 0.3s ease");
 
-    // Initialize simulation
     simulation = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links)
         .id(d => d.id)
@@ -210,14 +215,17 @@
   }
 
   function ticked() {
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    const width = Math.max(container.clientWidth, MIN_WIDTH);
+    const height = Math.max(container.clientHeight, MIN_HEIGHT);
     const padding = config.layout.padding;
 
-    nodes.forEach(node => {
-      node.x = Math.max(padding, Math.min(width - padding, node.x));
-      node.y = Math.max(padding, Math.min(height - padding, node.y));
-    });
+    // Only constrain nodes if screen is larger than minimum dimensions
+    if (container.clientWidth >= MIN_WIDTH && container.clientHeight >= MIN_HEIGHT) {
+      nodes.forEach(node => {
+        node.x = Math.max(padding, Math.min(width - padding, node.x));
+        node.y = Math.max(padding, Math.min(height - padding, node.y));
+      });
+    }
 
     linkElements
       .attr("x1", d => d.source.x)
@@ -263,7 +271,9 @@
 </script>
 
 <div class="graph-container" bind:this={container}>
-  <svg class="graph-svg" bind:this={svg}></svg>
+  <div class="svg-container">
+    <svg class="graph-svg" bind:this={svg}></svg>
+  </div>
   <div class="overlay-container">
     <GraphStats />
   </div>
@@ -282,6 +292,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background: white;
   }
 
   :global(.tooltip) {
@@ -318,11 +329,21 @@
     position: fixed;
     top: 0;
     left: 0;
+    background: white;
+    overflow: hidden;
+  }
+
+  .svg-container {
+    width: 100%;
+    height: 100%;
+    background: white;
   }
 
   .graph-svg {
     width: 100%;
     height: 100%;
+    display: block;
+    background: white;
   }
 
   .overlay-container {

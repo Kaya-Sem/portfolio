@@ -1,8 +1,10 @@
 <script>
   import ProjectGraph from './components/ProjectGraph.svelte';
+  import FloatingButtons from './components/FloatingButtons.svelte';
 </script>
 
 <ProjectGraph />
+<FloatingButtons />
 
 <style>
   * {

@@ -139,7 +139,7 @@ class ProjectManager {
     const degrees = {};
     this.nodes.forEach(node => {
       degrees[node.id] = this.links.filter(link => 
-        (link.source.id === node.id || link.target.id === node.id)
+        link.source === node.id || link.target === node.id
       ).length;
     });
     
@@ -150,6 +150,8 @@ class ProjectManager {
     const maxDegreeNode = this.nodes.find(node => degrees[node.id] === maxDegree);
     this.stats.maxDegree = maxDegree;
     this.stats.maxDegreeNodeName = maxDegreeNode.name;
+
+    this.saveToStorage();
   }
 
   clearCache() {
