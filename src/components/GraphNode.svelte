@@ -16,7 +16,7 @@
     rx="6"
     ry="6"
     fill={config.color}
-    stroke="gray"
+    stroke="#00050f"
     stroke-width="1.5"
   />
   <text
@@ -24,7 +24,7 @@
     y="0"
     text-anchor="middle"
     dominant-baseline="middle"
-    fill="black"
+    fill="#00050f"
     font-size="14px"
     font-weight="500"
     font-family="Arial, sans-serif"

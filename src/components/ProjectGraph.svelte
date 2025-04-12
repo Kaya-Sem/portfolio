@@ -40,16 +40,16 @@
     link: project.link,
     tags: project.tags,
     type: 'project',
-    x: Math.random() * 800,
-    y: Math.random() * 600
+    x: window.innerWidth / 2 + (Math.random() - 0.5) * 400,
+    y: window.innerHeight / 2 + (Math.random() - 0.5) * 300
   }));
 
   const tagNodes = allTags.map((tag, i) => ({
     id: `tag-${i}`,
     name: tag,
     type: 'tag',
-    x: Math.random() * 800,
-    y: Math.random() * 600
+    x: window.innerWidth / 2 + (Math.random() - 0.5) * 400,
+    y: window.innerHeight / 2 + (Math.random() - 0.5) * 300
   }));
 
   nodes = [...projectNodes, ...tagNodes];
@@ -75,7 +75,7 @@
     const degrees = {};
     nodes.forEach(node => {
       degrees[node.id] = links.filter(link => 
-        link.source === node.id || link.target === node.id
+        (link.source.id === node.id || link.target.id === node.id)
       ).length;
     });
     
@@ -158,8 +158,6 @@
             .append("circle")
             .attr("r", config.nodes[d.type].radius)
             .attr("fill", config.nodes[d.type].color)
-            .attr("stroke", "#fff")
-            .attr("stroke-width", "1");
         }
       })
       .call(d3.drag()
@@ -183,7 +181,6 @@
         // Highlight the hovered node
         element.style("opacity", 1);
         if (node.type === 'tag') {
-          element.select("circle").attr("fill", config.nodes[node.type].hoverColor);
           // Highlight the label of the hovered tag
           labelElements.filter(d => d.id === node.id)
             .style("opacity", 1);
@@ -205,7 +202,8 @@
           // Highlight the connecting link
           linkElements.filter(l => l === link)
             .style("opacity", 1)
-            .style("stroke-width", config.links.width * 1.5);
+            .style("stroke-width", config.links.width * 1.5)
+            .style("stroke", config.links.hoverColor);
         });
       })
       .on("mouseout", (event, node) => {
@@ -215,12 +213,9 @@
         nodeElements.style("opacity", 1);
         linkElements
           .style("opacity", config.links.opacity)
-          .style("stroke-width", config.links.width);
+          .style("stroke-width", config.links.width)
+          .style("stroke", config.links.color);
         labelElements.style("opacity", 1);
-        
-        if (node.type === 'tag') {
-          element.select("circle").attr("fill", config.nodes[node.type].color);
-        }
         
         tooltip.transition()
           .duration(500)
@@ -276,6 +271,16 @@
   }
 
   function ticked() {
+    // Keep nodes within bounds
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    const padding = config.layout.padding;
+
+    nodes.forEach(node => {
+      node.x = Math.max(padding, Math.min(width - padding, node.x));
+      node.y = Math.max(padding, Math.min(height - padding, node.y));
+    });
+
     linkElements
       .attr("x1", d => d.source.x)
       .attr("y1", d => d.source.y)

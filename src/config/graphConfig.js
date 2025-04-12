@@ -10,8 +10,8 @@ export const graphConfig = {
         fontSize: "14px",
         fontWeight: "500",
         color: "#333",
-        fontFamily: "Arial, sans-serif"
-      }
+        fontFamily: "Arial, sans-serif",
+      },
     },
     tag: {
       radius: 10,
@@ -22,49 +22,52 @@ export const graphConfig = {
         fontSize: "10px",
         fontWeight: "normal",
         color: "#666",
-        fontFamily: "Arial, sans-serif"
-      }
-    }
+        fontFamily: "Arial, sans-serif",
+      },
+    },
   },
   // Link settings
   links: {
-    color: "gray",
-    opacity: 0.4,
-    width: 1,
-    distance: 200,
-    strength: 0.3
+    color: "#999",
+    hoverColor: "#ff7f0e",
+    opacity: 0.6,
+    width: 1.5,
+    distance: 170,
+    strength: 0.5,
+    iterations: 1,
   },
   // Force settings
   forces: {
     charge: {
-      strength: -1500
+      strength: -1500,
     },
     center: {
-      strength: 0.2
+      strength: 0.2,
     },
     collision: {
       radius: 120,
-      strength: 0.7
+      strength: 0.7,
     },
     x: {
-      strength: 0.05
+      strength: 0.05,
     },
     y: {
-      strength: 0.05
+      strength: 0.05,
     },
     link: {
       iterations: 10,
       distance: 200,
-      strength: 0.3
-    }
+      strength: 0.3,
+    },
   },
   // Zoom settings
   zoom: {
     min: 0.1,
-    max: 4
+    max: 4,
   },
   // Layout settings
   layout: {
-    padding: 30
-  }
-}; 
+    padding: 80,
+  },
+};
+
