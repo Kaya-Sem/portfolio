@@ -3,11 +3,13 @@
   import * as d3 from 'd3';
   import { projects } from '../data/projects.js';
   import GraphStats from './GraphStats.svelte';
+  import GraphNode from './GraphNode.svelte';
+  import PdfPopup from './PdfPopup.svelte';
   import { graphConfig as config } from '../config/graphConfig.js';
 
   let container;
   let svg;
-  let selectedProject = null;
+  let activePdf = null;
   let stats = {
     projects: 0,
     tags: 0,
@@ -134,59 +136,67 @@
 
     // Create nodes
     nodeElements = g.append("g")
-      .selectAll("circle")
+      .selectAll("g")
       .data(nodes)
       .enter()
-      .append("circle")
-      .attr("r", node => config.nodes[node.type].radius)
-      .attr("fill", node => config.nodes[node.type].color)
+      .append("g")
+      .attr("transform", d => `translate(${d.x},${d.y})`)
+      .each(function(d) {
+        if (d.type === 'project') {
+          // Create project nodes using GraphNode component
+          new GraphNode({
+            target: this,
+            props: {
+              config: config.nodes[d.type],
+              name: d.name
+            }
+          });
+        } else {
+          // Create tag nodes directly
+          d3.select(this)
+            .append("circle")
+            .attr("r", config.nodes[d.type].radius)
+            .attr("fill", config.nodes[d.type].color)
+            .attr("stroke", "#fff")
+            .attr("stroke-width", "1");
+        }
+      })
       .call(d3.drag()
         .on("start", dragstarted)
         .on("drag", dragged)
         .on("end", dragended))
       .on("click", (event, node) => {
         if (node.type === 'project') {
-          selectedProject = {
-            name: node.name,
-            description: node.description,
-            link: node.link,
-            tags: node.tags
-          };
+          const pdfPath = `/spec/${node.name.toLowerCase().replace(/\s+/g, '_')}.pdf`;
+          activePdf = pdfPath;
         }
       })
       .on("mouseover", (event, node) => {
-        d3.select(event.currentTarget)
-          .attr("fill", config.nodes[node.type].hoverColor);
-        tooltip.transition()
-          .duration(200)
-          .style("opacity", .9);
-        
-        // Create tooltip content based on node type
-        let tooltipContent = node.name;
+        const element = d3.select(event.currentTarget);
         if (node.type === 'project') {
-          tooltipContent = `
-            <div class="tooltip-content">
-              <div class="tooltip-description">${node.description}</div>
-            </div>
-          `;
+          element.select("rect").attr("fill", config.nodes[node.type].hoverColor);
+        } else {
+          element.select("circle").attr("fill", config.nodes[node.type].hoverColor);
         }
         
-        tooltip.html(tooltipContent)
-          .style("left", (event.pageX + 10) + "px")
-          .style("top", (event.pageY - 28) + "px");
+    
       })
       .on("mouseout", (event, node) => {
-        d3.select(event.currentTarget)
-          .attr("fill", config.nodes[node.type].color);
+        const element = d3.select(event.currentTarget);
+        if (node.type === 'project') {
+          element.select("rect").attr("fill", config.nodes[node.type].color);
+        } else {
+          element.select("circle").attr("fill", config.nodes[node.type].color);
+        }
         tooltip.transition()
           .duration(500)
           .style("opacity", 0);
       });
 
-    // Create labels
+    // Create labels (only for tags)
     labelElements = g.append("g")
       .selectAll("text")
-      .data(nodes)
+      .data(nodes.filter(n => n.type === 'tag'))
       .enter()
       .append("text")
       .text(node => node.name)
@@ -235,8 +245,7 @@
       .attr("y2", d => d.target.y);
 
     nodeElements
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
+      .attr("transform", d => `translate(${d.x},${d.y})`);
 
     labelElements
       .attr("x", d => d.x)
@@ -277,21 +286,11 @@
   <div class="overlay-container">
     <GraphStats {stats} />
   </div>
-  {#if selectedProject}
-    <div class="sidebar">
-      <button class="close-button" on:click={() => selectedProject = null}>×</button>
-      <h2>{selectedProject.name}</h2>
-      <p class="description">{selectedProject.description}</p>
-      <a href={selectedProject.link} target="_blank" class="project-link">View Project →</a>
-      <div class="tags">
-        <h3>Tags:</h3>
-        <div class="tag-list">
-          {#each selectedProject.tags as tag}
-            <span class="tag">{tag}</span>
-          {/each}
-        </div>
-      </div>
-    </div>
+  {#if activePdf}
+    <PdfPopup 
+      pdfPath={activePdf} 
+      onClose={() => activePdf = null} 
+    />
   {/if}
 </div>
 
@@ -350,64 +349,5 @@
     top: 20px;
     left: 20px;
     z-index: 1000;
-  }
-
-  .sidebar {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 300px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-
-  .close-button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #666;
-  }
-
-  .description {
-    margin: 10px 0;
-    color: #666;
-    line-height: 1.4;
-  }
-
-  .project-link {
-    display: inline-block;
-    margin: 10px 0;
-    color: #1f77b4;
-    text-decoration: none;
-  }
-
-  .project-link:hover {
-    text-decoration: underline;
-  }
-
-  .tags {
-    margin-top: 15px;
-  }
-
-  .tag-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 5px;
-  }
-
-  .tag {
-    background: #f0f0f0;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    color: #666;
   }
 </style> 

@@ -2,19 +2,19 @@ export const graphConfig = {
   // Node settings
   nodes: {
     project: {
-      radius: 11,
-      color: "#1f77b4",
+      radius: 50,
+      color: "white",
       hoverColor: "#2a8be2",
-      labelOffset: 25,
+      labelOffset: 0,
       label: {
-        fontSize: "16px",
-        fontWeight: "bold",
+        fontSize: "14px",
+        fontWeight: "500",
         color: "#333",
         fontFamily: "Arial, sans-serif"
       }
     },
     tag: {
-      radius: 6,
+      radius: 10,
       color: "gray",
       hoverColor: "#ff9e3d",
       labelOffset: 16,
@@ -31,7 +31,7 @@ export const graphConfig = {
     color: "gray",
     opacity: 0.4,
     width: 1,
-    distance: 250,
+    distance: 200,
     strength: 0.3
   },
   // Force settings
@@ -54,7 +54,7 @@ export const graphConfig = {
     },
     link: {
       iterations: 10,
-      distance: 250,
+      distance: 200,
       strength: 0.3
     }
   },

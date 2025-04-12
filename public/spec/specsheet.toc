@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Project Overview}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Introduction}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Key Features}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Technologies Used}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Core Technologies}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Technology Diagram}{2}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Technical Details}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Architecture}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Data Flow}{2}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Key Algorithms}{3}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Challenges \& Solutions}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Technical Challenges}{3}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Lessons Learned}{3}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Screenshots \& Results}{3}{section.5}%
+\contentsline {section}{\numberline {6}Conclusion}{3}{section.6}%
