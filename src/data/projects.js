@@ -14,7 +14,8 @@ const Tags = Object.freeze({
   VUE: 'vue',
   SVELTE: 'svelte',
   LATEX: 'latex',
-  D3: 'd3'
+  D3: 'd3',
+  P2P: 'p2p'
 });
 
 export const projects = [
@@ -30,7 +31,7 @@ export const projects = [
     name: 'Ouroboros',
     description: 'A task management application with real-time updates',
     link: 'https://github.com/yourusername/task-manager',
-    tags: [Tags.GO, Tags.NETWORKING, Tags.DOCKER]
+    tags: [Tags.GO, Tags.NETWORKING, Tags.DOCKER, Tags.P2P]
   },
   {
     id: 'project9',
