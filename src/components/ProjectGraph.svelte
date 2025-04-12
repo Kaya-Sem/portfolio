@@ -113,8 +113,10 @@
         .on("end", dragended))
       .on("click", (_, node) => {
         if (node.type === 'project') {
-          const pdfPath = `/spec/${node.name.toLowerCase().replace(/\s+/g, '_')}.pdf`;
-          activePdf = pdfPath;
+          const pdfPath = config.pdfPaths[node.id];
+          if (pdfPath) {
+            activePdf = pdfPath;
+          }
         }
       })
       .on("mouseover", (event, node) => {

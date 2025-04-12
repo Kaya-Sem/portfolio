@@ -75,8 +75,8 @@ class ProjectManager {
   computeNodes() {
     const allTags = [...new Set(projects.flatMap(p => p.tags))];
     
-    const projectNodes = projects.map((project, i) => ({
-      id: `project-${i}`,
+    const projectNodes = projects.map((project) => ({
+      id: project.id,
       name: project.name,
       description: project.description,
       link: project.link,
@@ -106,11 +106,11 @@ class ProjectManager {
     const tagNodes = this.nodes.filter(n => n.type === 'tag');
     const allTags = tagNodes.map(t => t.name);
 
-    this.links = projects.flatMap((project, i) => 
+    this.links = projects.flatMap((project) => 
       project.tags.map(tag => {
         const tagIndex = allTags.indexOf(tag);
         return {
-          source: `project-${i}`,
+          source: project.id,
           target: `tag-${tagIndex}`,
           value: 1
         };
