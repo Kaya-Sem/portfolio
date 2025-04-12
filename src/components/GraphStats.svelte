@@ -1,13 +1,8 @@
 <script>
-  export let stats = {
-    projects: 0,
-    tags: 0,
-    edges: 0,
-    density: 0,
-    avgDegree: 0,
-    maxDegree: 0,
-    maxDegreeNodeName: ''
-  };
+  import ProjectManager from '../data/ProjectManager.js';
+  
+  const projectManager = ProjectManager.getInstance();
+  const stats = projectManager.getStats();
 </script>
 
 <div class="info-panel">

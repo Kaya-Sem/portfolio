@@ -2,7 +2,6 @@
   export let config;
   export let name = '';
 
-  // Calculate background width based on text length
   $: boxWidth = Math.max(name.length * 10 + 20, 100);
   $: boxHeight = 36;
 </script>

@@ -1,7 +1,7 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
   import * as d3 from 'd3';
-  import { projects } from '../data/projects.js';
+  import ProjectManager from '../data/ProjectManager.js';
   import GraphStats from './GraphStats.svelte';
   import GraphNode from './GraphNode.svelte';
   import PdfPopup from './PdfPopup.svelte';
@@ -29,70 +29,16 @@
   let zoom;
   let tooltip;
 
-  // Extract unique tags from all projects
-  const allTags = [...new Set(projects.flatMap(p => p.tags))];
-  
-  // Create nodes for projects and tags
-  const projectNodes = projects.map((project, i) => ({
-    id: `project-${i}`,
-    name: project.name,
-    description: project.description,
-    link: project.link,
-    tags: project.tags,
-    type: 'project',
-    x: window.innerWidth / 2 + (Math.random() - 0.5) * 400,
-    y: window.innerHeight / 2 + (Math.random() - 0.5) * 300
-  }));
-
-  const tagNodes = allTags.map((tag, i) => ({
-    id: `tag-${i}`,
-    name: tag,
-    type: 'tag',
-    x: window.innerWidth / 2 + (Math.random() - 0.5) * 400,
-    y: window.innerHeight / 2 + (Math.random() - 0.5) * 300
-  }));
-
-  nodes = [...projectNodes, ...tagNodes];
-
-  // Create links between projects and their tags
-  links = projects.flatMap((project, i) => 
-    project.tags.map(tag => {
-      const tagIndex = allTags.indexOf(tag);
-      return {
-        source: `project-${i}`,
-        target: `tag-${tagIndex}`,
-        value: 1
-      };
-    })
-  );
-
-  function calculateStats() {
-    stats.projects = projectNodes.length;
-    stats.tags = tagNodes.length;
-    stats.edges = links.length;
-    stats.density = links.length / (projectNodes.length * tagNodes.length);
-    
-    const degrees = {};
-    nodes.forEach(node => {
-      degrees[node.id] = links.filter(link => 
-        (link.source.id === node.id || link.target.id === node.id)
-      ).length;
-    });
-    
-    const degreeValues = Object.values(degrees);
-    stats.avgDegree = degreeValues.reduce((a, b) => a + b, 0) / degreeValues.length;
-    
-    const maxDegree = Math.max(...degreeValues);
-    const maxDegreeNode = nodes.find(node => degrees[node.id] === maxDegree);
-    stats.maxDegree = maxDegree;
-    stats.maxDegreeNodeName = maxDegreeNode.name;
-  }
+  const projectManager = ProjectManager.getInstance();
 
   function initializeGraph() {
     const width = container.clientWidth;
     const height = container.clientHeight;
 
-    // Clear existing SVG
+    nodes = projectManager.getNodes();
+    links = projectManager.getLinks();
+    stats = projectManager.getStats();
+
     d3.select(svg).selectAll("*").remove();
 
     // Create SVG
@@ -100,7 +46,6 @@
       .attr("width", width)
       .attr("height", height);
 
-    // Add white background
     svgElement.append("rect")
       .attr("width", width)
       .attr("height", height)
@@ -118,13 +63,11 @@
 
     svgElement.call(zoom);
 
-    // Create tooltip
     tooltip = d3.select("body")
       .append("div")
       .attr("class", "tooltip")
       .style("opacity", 0);
 
-    // Create links
     linkElements = g.append("g")
       .selectAll("line")
       .data(links)
@@ -135,7 +78,6 @@
       .attr("stroke-width", config.links.width)
       .style("transition", "opacity 0.3s ease, stroke-width 0.3s ease");
 
-    // Create nodes
     nodeElements = g.append("g")
       .selectAll("g")
       .data(nodes)
@@ -144,7 +86,6 @@
       .attr("transform", d => `translate(${d.x},${d.y})`)
       .each(function(d) {
         if (d.type === 'project') {
-          // Create project nodes using GraphNode component
           new GraphNode({
             target: this,
             props: {
@@ -164,7 +105,7 @@
         .on("start", dragstarted)
         .on("drag", dragged)
         .on("end", dragended))
-      .on("click", (event, node) => {
+      .on("click", (_, node) => {
         if (node.type === 'project') {
           const pdfPath = `/spec/${node.name.toLowerCase().replace(/\s+/g, '_')}.pdf`;
           activePdf = pdfPath;
@@ -199,6 +140,7 @@
           // Highlight connected label if it's a tag
           labelElements.filter(d => d.id === connectedNodeId)
             .style("opacity", 1);
+
           // Highlight the connecting link
           linkElements.filter(l => l === link)
             .style("opacity", 1)
@@ -261,17 +203,13 @@
         .strength(config.forces.y.strength))
       .on("tick", ticked);
 
-    // Add initial positions to keep nodes within bounds
     nodes.forEach(node => {
       node.x = Math.max(config.layout.padding, Math.min(width - config.layout.padding, node.x));
       node.y = Math.max(config.layout.padding, Math.min(height - config.layout.padding, node.y));
     });
-
-    calculateStats();
   }
 
   function ticked() {
-    // Keep nodes within bounds
     const width = container.clientWidth;
     const height = container.clientHeight;
     const padding = config.layout.padding;
@@ -327,7 +265,7 @@
 <div class="graph-container" bind:this={container}>
   <svg class="graph-svg" bind:this={svg}></svg>
   <div class="overlay-container">
-    <GraphStats {stats} />
+    <GraphStats />
   </div>
   {#if activePdf}
     <PdfPopup 
