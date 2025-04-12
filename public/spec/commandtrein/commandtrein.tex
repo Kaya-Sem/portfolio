@@ -152,15 +152,6 @@ Belgian rail users. At the time of writing, I was a student at Ghent University 
 \end{center}
 
 \section{Technical Details}
-\subsection{Architecture}
-The application follows a modular architecture with clear separation of concerns:
-\begin{itemize}
-	\item \textbf{CLI Layer}: Handles user interaction and command parsing using Cobra
-	\item \textbf{API Layer}: Manages communication with the iRail API
-	\item \textbf{Data Processing}: Handles JSON parsing and data transformation
-	\item \textbf{UI Layer}: Implements the terminal user interface using Bubbletea
-	\item \textbf{Configuration}: Manages user preferences and shortcuts using YAML
-\end{itemize}
 
 \subsection{Data Flow}
 \begin{enumerate}
@@ -172,12 +163,11 @@ The application follows a modular architecture with clear separation of concerns
 	\item User can interact with the displayed information
 \end{enumerate}
 
-\section{Challenges \& Solutions}
 \subsection{Technical Challenges}
 \begin{itemize}
 	\item \textbf{API Integration}: Handling various API response formats and error cases
 
-	      The iRail API was not a joy to work with. The JSON responses it provides are deeply nested and quite long. An average response for a connection between two stations can be thousands of lines long and I've seen nesting up to 25 leves in it. Not
+	      The iRail API was not a joy to work with. The JSON responses it provides are deeply nested and quite long. An average response for a connection between two stations can be thousands of lines long and I've seen nesting up to 25 levels deep. Not
 	      fun to parse or read.
 	      \begin{itemize}
 		      \item Solution: I complained loads but managed to work with it. I just hope nothing ever breaks or changes because I do not want to touch that API again. (It is somewhat hypermedia driven which is cool.)
@@ -193,11 +183,13 @@ The application follows a modular architecture with clear separation of concerns
 \end{itemize}
 
 
-\subsection{Lessons Learned}
+\subsection{Thoughts on CLI Libraries}
 
-I came across some limitations of CLI libraries that do not suit me. Libraries like cobra force you into a certain way of creating and interacting with CLI applications. This is ofcourse understandable. Standardisation and implementation / usage complexity matters.
+While working on this project, I encountered limitations with existing CLI libraries that didn't align with my needs. Popular libraries like Cobra enforce specific patterns for creating and interacting with CLI applications. While this standardization makes sense from a maintainability perspective, it can be restrictive.
 
-I find myself too often wanting to implement certain command parsing that I just cant.
+The hierarchical command structure common in these libraries, where arguments must follow a strict command tree pattern, felt overly constraining for my use case. I found myself frequently wanting to implement more flexible command parsing patterns that weren't possible within these frameworks' constraints. This experience highlighted the trade-off between standardized patterns and implementation flexibility in CLI development.
+
+Given these limitations, I am considering developing my own CLI framework that emphasizes scriptability and customization. The goal would be to create a more flexible system that allows developers to define their own command parsing patterns and interaction models, while still maintaining good practices and conventions. This would enable more creative and tailored CLI applications without sacrificing maintainability.
 
 \section{Screenshots \& Results}
 
@@ -208,13 +200,7 @@ I find myself too often wanting to implement certain command parsing that I just
 	\label{fig:screenshot1}
 
 
-\end{figure}\section{Conclusion}
-Commandtrein successfully provides a convenient way to access Belgian train information through the terminal. The project demonstrates effective use of modern Go tooling and frameworks to create a user-friendly CLI application. Future improvements could include:
-\begin{itemize}
-	\item Enhanced error handling and recovery
-	\item Additional customization options
-	\item Integration with more transportation services
-	\item Offline functionality for basic operations
-\end{itemize}
+\end{figure}
+
 
 \end{document}
