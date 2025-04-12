@@ -1,12 +1,15 @@
 <script>
   export let config;
   export let name = '';
+  export let wip = false;
+  export let description = '';
 
   $: boxWidth = Math.max(name.length * 10 + 20, 100);
   $: boxHeight = 36;
+  $: displayName = wip ? `[WIP] ${name}` : name;
 </script>
 
-<g>
+<g class:wip>
   <rect
     x={-boxWidth/2}
     y={-boxHeight/2}
@@ -15,7 +18,7 @@
     rx="6"
     ry="6"
     fill={config.color}
-    stroke="#00050f"
+    stroke={wip ? "transparent" : "#00050f"}
     stroke-width="1.5"
   />
   <text
@@ -23,11 +26,14 @@
     y="0"
     text-anchor="middle"
     dominant-baseline="middle"
-    fill="#00050f"
+    fill={wip ? "#999999" : "#00050f"}
     font-size="14px"
     font-weight="500"
     font-family="Arial, sans-serif"
-  >{name}</text>
+  >{displayName}</text>
+  {#if wip}
+    <title>{description} (Work in Progress)</title>
+  {/if}
 </g>
 
 <style>
@@ -36,5 +42,8 @@
   }
   rect {
     transition: fill 0.2s ease;
+  }
+  .wip {
+    pointer-events: none;
   }
 </style> 

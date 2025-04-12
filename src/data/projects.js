@@ -26,6 +26,7 @@ export const projects = [
       "A personal portfolio website showcasing my projects and skills",
     link: "https://github.com/yourusername/portfolio",
     tags: [Tags.GO, Tags.CLI, Tags.API],
+    wip: false,
   },
   {
     id: "2025-a9566dacc1e6455ebb7fff144d6e7e50",
@@ -33,6 +34,7 @@ export const projects = [
     description: "A task management application with real-time updates",
     link: "https://github.com/yourusername/task-manager",
     tags: [Tags.GO, Tags.NETWORKING, Tags.DOCKER, Tags.P2P],
+    wip: true,
   },
   {
     id: "2025-0d20a3c04bad4366bf78ad9ff2e607d2",
@@ -40,6 +42,7 @@ export const projects = [
     description: "Semantic folder mounting",
     link: "https://github.com/yourusername/task-manager",
     tags: [Tags.GO, Tags.CLI, Tags.LINUX, Tags.DOCKER],
+    wip: true,
   },
   {
     id: "2025-a9deb489bda540d09765aa66054da98b",
@@ -47,6 +50,7 @@ export const projects = [
     description: "Aggregation website for concerts and events in Gent",
     link: "https://github.com/Kaya-Sem/gentnachtleven",
     tags: [Tags.WEBSCRAPING, Tags.WEB, Tags.GO],
+    wip: true,
   },
   {
     id: "2024-7a49c319ffbd411999e12bf7f248aeed",
@@ -54,6 +58,7 @@ export const projects = [
     description: "Simple Error display library for Go",
     link: "https://github.com/Kaya-Sem/oopsie",
     tags: [Tags.GO, Tags.CLI, Tags.LIBRARY],
+    wip: false,
   },
   {
     id: "2025-662550edefdb423ea480deead8279d1b",
@@ -61,6 +66,7 @@ export const projects = [
     description: "Organize meeting with friends efficiently",
     link: "https://github.com/yourusername/task-manager",
     tags: [Tags.FLUTTER, Tags.MOBILE, Tags.FIREBASE],
+    wip: true,
   },
   {
     id: "2025-b0c866ac55e6441caf619a98d9a8c6f8",
@@ -68,6 +74,7 @@ export const projects = [
     description: "Portfolio website showcasing my projects and skills",
     link: "https://github.com/yourusername/data-viz",
     tags: [Tags.SVELTE, Tags.LATEX, Tags.D3, Tags.WEB],
+    wip: false,
   },
 ];
 

@@ -82,6 +82,7 @@ class ProjectManager {
       link: project.link,
       tags: project.tags,
       type: 'project',
+      wip: project.wip,
       x: window.innerWidth / 2 + (Math.random() - 0.5) * 400,
       y: window.innerHeight / 2 + (Math.random() - 0.5) * 300
     }));

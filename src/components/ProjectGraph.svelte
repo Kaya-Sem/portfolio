@@ -96,7 +96,9 @@
             target: this,
             props: {
               config: config.nodes[d.type],
-              name: d.name
+              name: d.name,
+              description: d.description,
+              wip: d.wip
             }
           });
         } else {
