@@ -1,5 +1,38 @@
-# Vue 3 + Vite
+# Portfolio Graph
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+An interactive portfolio website that visualizes my projects and their technological interconnections using a force-directed graph. Built with Svelte and D3.js.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Running Locally
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## Structure
+
+- `src/`: Source code
+  - `components/`: Svelte components
+  - `data/`: Project and graph data
+  - `config/`: Configuration files
+- `public/`: Static assets and project documentation
+  - `spec/`: Project specifications in LaTeX/PDF format
+
+## Features
+
+- Interactive force-directed graph of projects and technologies
+- Project documentation in PDF format
+- Graph statistics with caching
+- Desktop-optimized experience
+
+## Tech Stack
+
+- Svelte
+- D3.js
+- PDF.js

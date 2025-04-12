@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+public/spec/kayasemdotcom/kayasemdotcom.aux
+public/spec/kayasemdotcom/kayasemdotcom.fdb_latexmk
+public/spec/kayasemdotcom/kayasemdotcom.fls
+public/spec/kayasemdotcom/kayasemdotcom.out
+public/spec/kayasemdotcom/kayasemdotcom.synctex.gz
+public/spec/kayasemdotcom/kayasemdotcom.toc
+public/spec/commandtrein/commandtrein.aux
+public/spec/commandtrein/commandtrein.fdb_latexmk
+public/spec/commandtrein/commandtrein.fls
+public/spec/commandtrein/commandtrein.out
+public/spec/commandtrein/commandtrein.synctex.gz
+public/spec/commandtrein/commandtrein.toc
