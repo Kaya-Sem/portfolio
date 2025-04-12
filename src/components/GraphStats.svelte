@@ -41,13 +41,14 @@
 <style>
   .info-panel {
     background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
+    padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .info-panel h3 {
     margin-bottom: 10px;
+    margin-top: -10px;
     color: #333;
   }
 

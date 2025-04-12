@@ -132,7 +132,8 @@
       .append("line")
       .attr("stroke", config.links.color)
       .attr("stroke-opacity", config.links.opacity)
-      .attr("stroke-width", config.links.width);
+      .attr("stroke-width", config.links.width)
+      .style("transition", "opacity 0.3s ease, stroke-width 0.3s ease");
 
     // Create nodes
     nodeElements = g.append("g")
@@ -173,21 +174,54 @@
       })
       .on("mouseover", (event, node) => {
         const element = d3.select(event.currentTarget);
-        if (node.type === 'project') {
-          element.select("rect").attr("fill", config.nodes[node.type].hoverColor);
-        } else {
+        
+        // Dim all nodes and links
+        nodeElements.style("opacity", 0.2);
+        linkElements.style("opacity", 0.1);
+        labelElements.style("opacity", 0.2);
+        
+        // Highlight the hovered node
+        element.style("opacity", 1);
+        if (node.type === 'tag') {
           element.select("circle").attr("fill", config.nodes[node.type].hoverColor);
+          // Highlight the label of the hovered tag
+          labelElements.filter(d => d.id === node.id)
+            .style("opacity", 1);
         }
         
-    
+        // Highlight connected nodes and links
+        const connectedLinks = links.filter(link => 
+          link.source.id === node.id || link.target.id === node.id
+        );
+        
+        connectedLinks.forEach(link => {
+          const connectedNodeId = link.source.id === node.id ? link.target.id : link.source.id;
+          // Highlight connected node
+          nodeElements.filter(d => d.id === connectedNodeId)
+            .style("opacity", 1);
+          // Highlight connected label if it's a tag
+          labelElements.filter(d => d.id === connectedNodeId)
+            .style("opacity", 1);
+          // Highlight the connecting link
+          linkElements.filter(l => l === link)
+            .style("opacity", 1)
+            .style("stroke-width", config.links.width * 1.5);
+        });
       })
       .on("mouseout", (event, node) => {
         const element = d3.select(event.currentTarget);
-        if (node.type === 'project') {
-          element.select("rect").attr("fill", config.nodes[node.type].color);
-        } else {
+        
+        // Reset all opacities
+        nodeElements.style("opacity", 1);
+        linkElements
+          .style("opacity", config.links.opacity)
+          .style("stroke-width", config.links.width);
+        labelElements.style("opacity", 1);
+        
+        if (node.type === 'tag') {
           element.select("circle").attr("fill", config.nodes[node.type].color);
         }
+        
         tooltip.transition()
           .duration(500)
           .style("opacity", 0);
@@ -206,6 +240,10 @@
       .attr("font-family", node => config.nodes[node.type].label.fontFamily)
       .attr("dx", node => config.nodes[node.type].labelOffset)
       .attr("dy", 4);
+
+    // Add transition styles to nodes and labels
+    nodeElements.style("transition", "opacity 0.3s ease");
+    labelElements.style("transition", "opacity 0.3s ease");
 
     // Initialize simulation
     simulation = d3.forceSimulation(nodes)
