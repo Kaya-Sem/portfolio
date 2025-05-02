@@ -21,7 +21,7 @@
 
   $: boxWidth = Math.max(name.length * 10 + 20, 100);
   $: boxHeight = 36;
-  $: displayName = wip ? `[WIP] ${name}` : name;
+  $: displayName = name;
 </script>
 
 <g 

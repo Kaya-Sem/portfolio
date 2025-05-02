@@ -22,7 +22,7 @@ const Tags = Object.freeze({
 export const projects = [
   {
     id: "2025-ddf964418eff45ae947fdeaeec820a81",
-    name: "We are Hackathon 2025",
+    name: "🏗️ We are Hackathon 2025",
     description:
       "A personal portfolio website showcasing my projects and skills",
     link: "https://github.com/yourusername/hack",
@@ -40,7 +40,7 @@ export const projects = [
   },
   {
     id: "2025-a9566dacc1e6455ebb7fff144d6e7e50",
-    name: "Ouroboros",
+    name: "🏗️ Ouroboros",
     description: "A task management application with real-time updates",
     link: "https://github.com/yourusername/task-manager",
     tags: [Tags.GO, Tags.NETWORKING, Tags.DOCKER, Tags.P2P],
@@ -48,7 +48,7 @@ export const projects = [
   },
   {
     id: "2025-0d20a3c04bad4366bf78ad9ff2e607d2",
-    name: "Semlink",
+    name: "🏗️ Semlink",
     description: "Semantic folder mounting",
     link: "https://github.com/yourusername/task-manager",
     tags: [Tags.GO, Tags.CLI, Tags.LINUX, Tags.DOCKER],
@@ -56,7 +56,7 @@ export const projects = [
   },
   {
     id: "2025-a9deb489bda540d09765aa66054da98b",
-    name: "Gent Nachtleven",
+    name: "🏗️ Gent Nachtleven",
     description: "Aggregation website for concerts and events in Gent",
     link: "https://github.com/Kaya-Sem/gentnachtleven",
     tags: [Tags.WEBSCRAPING, Tags.WEB, Tags.GO],
@@ -72,7 +72,7 @@ export const projects = [
   },
   {
     id: "2025-662550edefdb423ea480deead8279d1b",
-    name: "Friendsync",
+    name: "🏗️ Friendsync",
     description: "Organize meeting with friends efficiently",
     link: "https://github.com/yourusername/task-manager",
     tags: [Tags.FLUTTER, Tags.MOBILE, Tags.FIREBASE],
