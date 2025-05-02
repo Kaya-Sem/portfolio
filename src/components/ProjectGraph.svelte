@@ -31,6 +31,9 @@
   let labelElements;
   let zoom;
   let tooltip;
+  let animationFrameId = null;
+  let lastTickTime = 0;
+  const TICK_THROTTLE = 16; // Limit to ~60fps
 
   const projectManager = ProjectManager.getInstance();
 
@@ -236,6 +239,13 @@
   }
 
   function ticked() {
+    const currentTime = performance.now();
+    if (currentTime - lastTickTime < TICK_THROTTLE) {
+      animationFrameId = requestAnimationFrame(ticked);
+      return;
+    }
+    lastTickTime = currentTime;
+
     const width = Math.max(container.clientWidth, MIN_WIDTH);
     const height = Math.max(container.clientHeight, MIN_HEIGHT);
     const padding = config.layout.padding;
@@ -260,6 +270,8 @@
     labelElements
       .attr("x", d => d.x)
       .attr("y", d => d.y);
+
+    animationFrameId = requestAnimationFrame(ticked);
   }
 
   function dragstarted(event, d) {
@@ -288,6 +300,7 @@
     window.removeEventListener('resize', initializeGraph);
     if (simulation) simulation.stop();
     if (tooltip) tooltip.remove();
+    if (animationFrameId) cancelAnimationFrame(animationFrameId);
   });
 </script>
 
