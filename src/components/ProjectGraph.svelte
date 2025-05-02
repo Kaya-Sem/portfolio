@@ -74,6 +74,22 @@
       .attr("class", "tooltip")
       .style("opacity", 0);
 
+    // Function to handle tooltip display
+    const handleShowTooltip = (event) => {
+      const { description, x, y } = event.detail;
+      tooltip.html(`<div class="tooltip-content">
+        <div class="tooltip-description">${description}</div>
+      </div>`)
+      .style("left", `${x + 15}px`)
+      .style("top", `${y + 10}px`)
+      .style("opacity", 1);
+    };
+
+    // Function to handle tooltip hiding
+    const handleHideTooltip = () => {
+      tooltip.style("opacity", 0);
+    };
+
     linkElements = g.append("g")
       .selectAll("line")
       .data(links)
@@ -92,7 +108,7 @@
       .attr("transform", d => `translate(${d.x},${d.y})`)
       .each(function(d) {
         if (d.type === 'project') {
-          new GraphNode({
+          const node = new GraphNode({
             target: this,
             props: {
               config: config.nodes[d.type],
@@ -101,6 +117,11 @@
               wip: d.wip
             }
           });
+          
+          // Add event listeners for tooltip
+          node.$on('showtooltip', handleShowTooltip);
+          node.$on('hidetooltip', handleHideTooltip);
+          
         } else {
           // Create tag nodes directly
           d3.select(this)
@@ -168,10 +189,6 @@
           .style("stroke-width", config.links.width)
           .style("stroke", config.links.color);
         labelElements.style("opacity", 1);
-        
-        tooltip.transition()
-          .duration(500)
-          .style("opacity", 0);
       });
 
     // Create labels (only for tags)
@@ -309,6 +326,7 @@
     pointer-events: none;
     max-width: 300px;
     z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
   :global(.tooltip-content) {

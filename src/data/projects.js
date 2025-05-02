@@ -16,9 +16,19 @@ const Tags = Object.freeze({
   LATEX: "latex",
   D3: "d3",
   P2P: "p2p",
+  EVENT: "event",
 });
 
 export const projects = [
+  {
+    id: "2025-ddf964418eff45ae947fdeaeec820a81",
+    name: "We are Hackathon 2025",
+    description:
+      "A personal portfolio website showcasing my projects and skills",
+    link: "https://github.com/yourusername/hack",
+    tags: [Tags.EVENT, Tags.FLUTTER, Tags.MOBILE],
+    wip: true,
+  },
   {
     id: "2024-0356d86e0f434447a5aa19089ae2dcd",
     name: "Commandtrein",
