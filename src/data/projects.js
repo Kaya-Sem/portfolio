@@ -23,8 +23,7 @@ export const projects = [
   {
     id: "2025-ddf964418eff45ae947fdeaeec820a81",
     name: "🏗️ We are Hackathon 2025",
-    description:
-      "A personal portfolio website showcasing my projects and skills",
+    description: "Fun hackathon hosted by We Are.",
     link: "https://github.com/yourusername/hack",
     tags: [Tags.EVENT, Tags.FLUTTER, Tags.MOBILE],
     wip: true,
@@ -32,8 +31,7 @@ export const projects = [
   {
     id: "2024-0356d86e0f434447a5aa19089ae2dcd",
     name: "Commandtrein",
-    description:
-      "A personal portfolio website showcasing my projects and skills",
+    description: "CLI NMBS schedule tool",
     link: "https://github.com/yourusername/portfolio",
     tags: [Tags.GO, Tags.CLI, Tags.API],
     wip: false,
@@ -41,7 +39,7 @@ export const projects = [
   {
     id: "2025-a9566dacc1e6455ebb7fff144d6e7e50",
     name: "🏗️ Ouroboros",
-    description: "A task management application with real-time updates",
+    description: "Peer-to-peer UDP client",
     link: "https://github.com/yourusername/task-manager",
     tags: [Tags.GO, Tags.NETWORKING, Tags.DOCKER, Tags.P2P],
     wip: true,
