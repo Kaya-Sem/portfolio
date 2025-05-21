@@ -18,6 +18,7 @@ const Tags = Object.freeze({
   P2P: "p2p",
   EVENT: "event",
   RSS: "RSS",
+  SQL: "SQL",
 });
 
 export const projects = [
@@ -33,7 +34,7 @@ export const projects = [
     id: "2024-0356d86e0f434447a5aa19089ae2dcd",
     name: "Commandtrein",
     description: "CLI NMBS schedule tool",
-    link: "https://github.com/yourusername/portfolio",
+    link: "https://github.com/Kaya-Sem/commandtrein",
     tags: [Tags.GO, Tags.CLI, Tags.API],
     wip: false,
   },
@@ -49,8 +50,8 @@ export const projects = [
     id: "2025-0d20a3c04bad4366bf78ad9ff2e607d2",
     name: "🏗️ Semlink",
     description: "Semantic folder mounting",
-    link: "https://github.com/yourusername/task-manager",
-    tags: [Tags.GO, Tags.CLI, Tags.LINUX, Tags.DOCKER],
+    link: "https://github.com/Kaya-Sem/semlink",
+    tags: [Tags.GO, Tags.CLI, Tags.LINUX, Tags.SQL],
     wip: true,
   },
   {
@@ -70,7 +71,7 @@ export const projects = [
     wip: false,
   },
   {
-    id: "2024-7a49c319fzbd411999e12bf7f248aeed",
+    id: "2025-ecd5628b92ab4e0aa920854ed37feb80",
     name: "Gent-nieuws RSS",
     description: "Gent Nieuwsberichten RSS generator",
     link: "https://github.com/Kaya-Sem/gent-nieuws-rss",
