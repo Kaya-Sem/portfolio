@@ -11,6 +11,7 @@ class ProjectManager {
       return ProjectManager.instance;
     }
     ProjectManager.instance = this;
+    this.clearCache();
     this.loadFromStorage();
   }
 
@@ -23,6 +24,15 @@ class ProjectManager {
 
   loadFromStorage() {
     try {
+      // In production, always compute fresh data
+      if (import.meta.env.PROD) {
+        this.computeNodes();
+        this.computeLinks();
+        this.computeStats();
+        return;
+      }
+
+      // In development, try to load from storage
       const storedNodes = localStorage.getItem('projectManager_nodes');
       const storedLinks = localStorage.getItem('projectManager_links');
       const storedStats = localStorage.getItem('projectManager_stats');
