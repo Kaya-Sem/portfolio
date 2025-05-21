@@ -17,6 +17,7 @@ const Tags = Object.freeze({
   D3: "d3",
   P2P: "p2p",
   EVENT: "event",
+  RSS: "RSS",
 });
 
 export const projects = [
@@ -66,6 +67,14 @@ export const projects = [
     description: "Simple Error display library for Go",
     link: "https://github.com/Kaya-Sem/oopsie",
     tags: [Tags.GO, Tags.CLI, Tags.LIBRARY],
+    wip: false,
+  },
+  {
+    id: "2024-7a49c319fzbd411999e12bf7f248aeed",
+    name: "Gent-nieuws RSS",
+    description: "Gent Nieuwsberichten RSS generator",
+    link: "https://github.com/Kaya-Sem/gent-nieuws-rss",
+    tags: [Tags.GO, Tags.RSS, Tags.DOCKER],
     wip: false,
   },
   {
