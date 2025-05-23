@@ -39,6 +39,14 @@ export const projects = [
     wip: false,
   },
   {
+    id: "2025-e15f2d97d7464a98bc7151b20e0565e7",
+    name: "RSS-builder",
+    description: "Simple RSS library",
+    link: "https://github.com/Kaya-Sem/rss-builder",
+    tags: [Tags.GO, Tags.RSS, Tags.LIBRARY],
+    wip: false,
+  },
+  {
     id: "2025-a9566dacc1e6455ebb7fff144d6e7e50",
     name: "🏗️ Ouroboros",
     description: "Peer-to-peer UDP client",
