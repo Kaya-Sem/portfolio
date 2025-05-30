@@ -31,6 +31,14 @@ export const projects = [
     wip: true,
   },
   {
+    id: "2025-03073a14258d4dec805a78d50ad1f344",
+    name: "Outdoor Gear Shops",
+    description: "List of outdoor gear shops",
+    link: "https://outdoorshops.kaya-sem.com/",
+    tags: [Tags.WEB],
+    wip: true,
+  },
+  {
     id: "2024-0356d86e0f434447a5aa19089ae2dcd",
     name: "Commandtrein",
     description: "CLI NMBS schedule tool",
