@@ -36,7 +36,7 @@ export const projects = [
     description: "List of outdoor gear shops",
     link: "https://outdoorshops.kaya-sem.com/",
     tags: [Tags.WEB],
-    wip: true,
+    wip: false,
   },
   {
     id: "2024-0356d86e0f434447a5aa19089ae2dcd",
